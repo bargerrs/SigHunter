@@ -10,10 +10,6 @@ This technique scans the file using Windows Defender to identify signatured sect
 ### File Deletion Technique
 This technique drops the file into the temporary directory and monitors if it gets deleted. If the file is deleted within a specified time frame, it indicates that the file is signatured.
 
-## Prerequisites
-- Windows PowerShell 3.0 or later.
-- Windows Defender installed (for Windows Defender scanning).
-
 ## Usage
 The `TestForSignatures` function is the main function to interact with. It has several parameters to customize the testing process:
 
