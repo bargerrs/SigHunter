@@ -1,5 +1,4 @@
-# Script Name
-SIG HUNTER
+# SIG HUNTER
 
 ## Description
 A PowerShell script designed to identify signatured sections in a file that may trigger AD/EDR systems. It utilizes binary tree search methodology to hunt through the file for signatures. The script offers two detection techniques: Windows Defender scanning and File Deletion analysis.
