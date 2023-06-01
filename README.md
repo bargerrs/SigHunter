@@ -27,7 +27,7 @@ TestForSignatures -Filename <FilePath> -TestMethod <DetectionMethod> [-Base64Enc
 
 ## User Configurable Values
 
-Before running the script, you can modify the following variables according to your environment:
+Before running the script, you can opt to modify the following variables according to your environment:
 
 - `$defenderExe`: The file path to the `MpCmdRun.exe` executable for Windows Defender scanning. The default value attempts to retrieve it from the registry.
 - `$defaultWaitTime`: The default amount of time in seconds to wait during the first 'File Deletion' technique.
