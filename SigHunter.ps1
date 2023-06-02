@@ -93,14 +93,23 @@ function TestForSignatures {
             }
         }else{
             $byteOffset = $End # specify the byte offset here
-
+            if ([byte]$ByteArray[$End] -eq 0x00) {
+                #Have to keep this from being 0x00 or it will break the findLast search later.
+                $ByteArray[$End] = [char]0x46
+            }
             # Read the contents of the file as a single string
             $encoding = [System.Text.Encoding]::ASCII
             $fileContent = $encoding.GetString($ByteArray)
             # Find the null character that precedes the word that contains the byte at the offset
-            $nullIndex = $fileContent.LastIndexOf([char]0, $byteOffset)
+            $nullIndex = $fileContent.LastIndexOf([char]0x00, $byteOffset)
             if(($End-$nullIndex -eq 0) -or ($nullIndex -eq -1)){
                 $nullIndex = $fileContent.LastIndexOf([char]0x20, $byteOffset)
+            }
+            #Keep the returned value to less than 40 chars long
+            $nullIndex = [Math]::Max($nullIndex, ($End - $maximumSigLength))
+            #Set value max lenght (40 chars long) if less than 10 chars.
+            if(($End-$nullIndex)-lt $minimumSigLength){
+                $nullIndex = [Math]::Max(0, ($End - $maximumSigLength))
             }
             # Extract the word that contains the byte at the offset
             $wordStart = $nullIndex + 1
@@ -111,11 +120,18 @@ function TestForSignatures {
             Write-Host "Signature at byte $hexString1 : $word (starting at byte $hexString2)"
 
             #Modifying the in memory value of EXEBytes; to avoid detection next time.
-            if ([byte]$ByteArray[$End] -eq 0x90) {
-                $ByteArray[$End] = [char]0x00
+            if ([byte]$ByteArray[$End] -eq 0x88) {
+                $ByteArray[$End] = [char]0x85
             } else {
-                $ByteArray[$End] = [char]0x90
+                $ByteArray[$End] = [char]0x88
             }
+
+            if ([byte]$ByteArray[$Start] -eq 0x88) {
+                $ByteArray[$Start] = [char]0x85
+            } else {
+                $ByteArray[$Start] = [char]0x88
+            }
+
             return $ByteArray
         }
     }
@@ -201,12 +217,17 @@ $defenderExe = $(Join-Path (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Win
 $defaultWaitTime = 90
 #How much longer to we wait after this first successful 'File Deletion'?  Default is 50% longer.
 $defaultWaitTimeIncrease = 1.5
-
+#Maximum number of characters in a signature; for rendering output.
+$maximumSigLength = 40
+#Minimum number of characters in a signature; for rendering output.
+$minimumSigLength = 10
 
 ###########################
 # EXAMPLE USAGES
 ###########################
-#TestForSignatures -Filename "C:\Example\testFile.exe" -TestMethod 'Windows Defender'
+#Set-ExecutionPolicy Unrestricted -Scope CurrentUser
+
+TestForSignatures -Filename "C:\Users\Ned.Ryerson\source\repos\Rubeus-master\Rubeus-master\Rubeus\bin\Debug\Rubeus.exe" -TestMethod 'Windows Defender'
     #The above method will scan the exe with Windows Defender
 
 #TestForSignatures -Filename "C:\Example\testfile.txt" -Base64Encoded -TestMethod 'Windows Defender'
