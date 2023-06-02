@@ -227,7 +227,7 @@ $minimumSigLength = 10
 ###########################
 #Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 
-TestForSignatures -Filename "C:\Users\Ned.Ryerson\source\repos\Rubeus-master\Rubeus-master\Rubeus\bin\Debug\Rubeus.exe" -TestMethod 'Windows Defender'
+#TestForSignatures -Filename "C:\Example\testfile.exe" -TestMethod 'Windows Defender'
     #The above method will scan the exe with Windows Defender
 
 #TestForSignatures -Filename "C:\Example\testfile.txt" -Base64Encoded -TestMethod 'Windows Defender'
