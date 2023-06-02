@@ -31,6 +31,8 @@ Before running the script, you can opt to modify the following variables accordi
 - `$defenderExe`: The file path to the `MpCmdRun.exe` executable for Windows Defender scanning. The default value attempts to retrieve it from the registry.
 - `$defaultWaitTime`: The default amount of time in seconds to wait during the first 'File Deletion' technique.
 - `$defaultWaitTimeIncrease`: The multiplier to increase the wait time after the first successful 'File Deletion'.
+- `$maximumSigLength`: Maximum number of characters in a signature when for rendering output.
+- `$minimumSigLength`: Minimum number of characters in a signature when for rendering output.
 
 ## Example Usages
 
