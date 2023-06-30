@@ -3,6 +3,8 @@
 ## Description
 A PowerShell script designed to identify signatured sections in a file that may trigger AD/EDR systems. It utilizes binary tree search methodology to hunt through the file for signatures. The script offers two detection techniques: Windows Defender scanning and File Deletion analysis.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LWg5cXs-dZw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ### Windows Defender Technique
 This technique scans the file using Windows Defender to identify signatured sections.
 
